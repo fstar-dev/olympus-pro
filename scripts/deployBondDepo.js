@@ -3,18 +3,23 @@ const { ethers } = require("hardhat");
 async function main() {
     const [deployer] = await ethers.getSigners();
     console.log("Deploying contracts with the account: " + deployer.address);
+    const authority = "0x05b24E8833Ba839d638e1FBF69824E93b5f498D2";
+    const ohm = "0x1B7f404601ee80D633297daB5b446ff8a467a0E5";
+    const gohm = "0xb3a468800804B5a842a4eaF9021B44cD7536e899";
+    const staking = "0xeF73cAA82bf408039090f916A78d411106ff51e5";
+    const treasury = "0x0c54fc3Eb695598f476dAC5c80500efB5Dc4164d";
+    const depoPro = "0x10d79787282C9aFe242785E2C2C34E89Be52cE33";
+    // const depoFactory = await ethers.getContractFactory("OlympusBondDepositoryV2");
 
-    const authority = "0x1c21F8EA7e39E2BA00BC12d2968D63F4acb38b7A";
-    const ohm = "0x64aa3364F17a4D01c6f1751Fd97C2BD3D7e7f1D5";
-    const gohm = "0x0ab87046fBb341D058F17CBC4c1133F25a20a52f";
-    const staking = "0xB63cac384247597756545b500253ff8E607a8020";
-    const treasury = "0x9A315BdF513367C0377FB36545857d12e85813Ef";
+    // const depo = await depoFactory.deploy(authority, ohm, gohm, staking, treasury);
 
-    const depoFactory = await ethers.getContractFactory("OlympusBondDepositoryV2");
+    // console.log("Bond Depo: " + depo.address);
+    const BondCreator = await ethers.getContractFactory("OlympusProInverseBondCreator");
 
-    const depo = await depoFactory.deploy(authority, ohm, gohm, staking, treasury);
+    const bondCreator = await BondCreator.deploy(ohm,treasury, gohm, authority);
 
-    console.log("Bond Depo: " + depo.address);
+    console.log("Bond Depo: " + bondCreator.address);
+
 }
 
 main()
